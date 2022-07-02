@@ -33,7 +33,7 @@ router.post("/signup", (req, res, next) => {
 
 router.get("/login", (req, res) => {
   if (req.isAuthenticated()) res.redirect("/");
-  res.render("login");
+  else res.render("login");
 });
 
 router.post(
