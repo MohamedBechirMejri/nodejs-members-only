@@ -28,3 +28,5 @@ const postSchema = new Schema(
 postSchema.virtual("url", function () {
   return `/posts/${this._id}`;
 });
+
+module.exports = mongoose.model("Post", postSchema);
