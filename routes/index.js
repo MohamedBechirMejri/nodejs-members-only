@@ -31,21 +31,21 @@ router.post("/signup", (req, res, next) => {
   });
 });
 
-router.get("/login", (req, res) => res.render("login"));
+router.get("/login", (req, res) => {
+  if (req.isAuthenticated()) res.redirect("/");
+  res.render("login");
+});
 
-router.post(
-  "/login",
+router.post("/login", (req, res) => {
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
-  })
-);
+  })(req, res);
+});
 
 router.get("/logout", (req, res, next) => {
   req.logout(err => {
-    if (err) {
-      return next(err);
-    }
+    if (err) return next(err);
     res.redirect("/");
   });
 });
