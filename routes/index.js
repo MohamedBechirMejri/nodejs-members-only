@@ -8,7 +8,7 @@ const passport = require("../auth/passport");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("index", { user: req.user });
+  res.render("index", { title: "Home" });
 });
 
 router.get("/signup", (req, res) => res.render("signup"));
@@ -19,6 +19,10 @@ router.post("/signup", (req, res, next) => {
     const user = new User({
       username: req.body.username,
       password: hashedPassword,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      membership: "free",
     });
     user.save(err => {
       if (err) return next(err);
