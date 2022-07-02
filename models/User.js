@@ -46,3 +46,5 @@ userSchema.virtual("name", function () {
 userSchema.virtual("url", function () {
   return `/users/${this._id}`;
 });
+
+module.exports = mongoose.model("User", userSchema);
