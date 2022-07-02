@@ -43,3 +43,6 @@ const userSchema = new Schema(
 userSchema.virtual("name", function () {
   return `${this.firstName} ${this.lastName}`;
 });
+userSchema.virtual("url", function () {
+  return `/users/${this._id}`;
+});
