@@ -26,9 +26,8 @@ const userSchema = new Schema(
     membership: {
       type: String,
       required: true,
-      enum: ["free", "premium"],
+      enum: ["free", "premium", "admin"],
     },
-
     posts: [
       {
         type: Schema.Types.ObjectId,
@@ -40,3 +39,7 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
+
+userSchema.virtual("name", function () {
+  return `${this.firstName} ${this.lastName}`;
+});
