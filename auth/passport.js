@@ -6,12 +6,19 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username }, (err, user) => {
-      if (!user) return done(null, false, { message: "Incorrect username" });
+  new LocalStrategy((email, password, done) => {
+    User.findOne({ email }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect email" });
+      }
       bcrypt.compare(password, user.password, (err, res) => {
         if (err) return done(err);
-        if (!res) return done(null, false, { message: "Incorrect password" });
+        if (!res) {
+          return done(null, false, { message: "Incorrect password" });
+        }
       });
       return done(null, user);
     });
