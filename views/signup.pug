@@ -2,4 +2,12 @@ extends layout
 
 block content
 
-    p form
+    form(action="" method="POST")
+        h1 Sign Up
+        input(type="text" name="firstName" placeholder="First Name" required)
+        input(type="text" name="lastName" placeholder="Last Name" required)
+        input(type="email" name="email" placeholder="Email" required)
+        input(type="password" name="password" placeholder="Password")
+        input(type="password" name="passwordConfirmation" placeholder="Confirm Password")
+        input(type="submit" value="Sign Up")
+        a(href="/login") Already have an account?
