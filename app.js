@@ -1,3 +1,12 @@
+require("dotenv").config();
+
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -5,7 +14,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const session = require("express-session");
-const bcrypt = require("bcryptjs");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -14,6 +24,15 @@ const postsRouter = require("./routes/posts");
 const passport = require("./auth/passport");
 
 const app = express();
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+app.use(compression()); // Compress all routes
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
