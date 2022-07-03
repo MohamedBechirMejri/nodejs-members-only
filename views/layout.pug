@@ -2,6 +2,18 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
   body
-    block content
+    header
+      a(href="/") Home
+      nav
+        if !user
+          div
+            a(href='/login') Login
+            a(href='/signup') Signup
+        else
+          if user,membership !== 'admin'
+            div
+              a(href='/membership') VIP
+    .p-4
+      block content
