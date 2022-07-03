@@ -28,12 +28,6 @@ const userSchema = new Schema(
       required: true,
       enum: ["free", "premium", "admin"],
     },
-    posts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
   },
   {
     timestamps: true,
