@@ -3,17 +3,19 @@ html
   head
     title= title
     link(rel='stylesheet' href='/stylesheets/style.css')
-  body
-    header
-      a(href="/") Home
-      nav
-        if !user
-          div
-            a(href='/login') Login
-            a(href='/signup') Signup
-        else
-          if user,membership !== 'admin'
+  body.w-screen.h-screen
+    .w-full.h-full.flex.flex-col.items-center.justify-start
+      header.w-full.flex.justify-between.items-center.px-8.p-4
+        a(href="/") Home
+        nav.flex.justify-between.items-center.gap-4
+          if !user
             div
-              a(href='/membership') VIP
-    .p-4
-      block content
+              a(href='/login') Login
+              a(href='/signup') Signup
+          else
+            if user,membership !== 'admin'
+              div
+                a(href='/membership') VIP
+          a(href="/logout") Logout
+      .p-4
+        block content
