@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 
@@ -72,6 +73,33 @@ router.get("/logout", (req, res, next) => {
     if (err) return next(err);
     res.redirect("/");
   });
+});
+
+router.get("/membership", (req, res, next) => {
+  if (!req.isAuthenticated()) res.redirect("/login");
+  else res.render("membership", { title: "Membership", user: req.user });
+});
+
+router.post("/membership", (req, res, next) => {
+  if (!req.isAuthenticated()) res.redirect("/login");
+  if (
+    req.body.secretCode !== process.env.ADMIN_SECRET_CODE ||
+    req.body.secretCode !== process.env.PREMIUM_SECRET_CODE
+  )
+    res.render("membership", {
+      title: "Membership",
+      user: req.user,
+      error: "Invalid Secret Code",
+    });
+  else
+    User.findById(req.user._id, (err, user) => {
+      if (err) return next(err);
+      user.membership = req.body.membership;
+      user.save(err => {
+        if (err) return next(err);
+        res.redirect("/");
+      });
+    });
 });
 
 module.exports = router;
