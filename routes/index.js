@@ -80,26 +80,34 @@ router.get("/membership", (req, res, next) => {
   else res.render("membership", { title: "Membership", user: req.user });
 });
 
-router.post("/membership", (req, res, next) => {
-  if (!req.isAuthenticated()) res.redirect("/login");
-  if (
-    req.body.secretCode !== process.env.ADMIN_SECRET_CODE
-    // ||req.body.secretCode !== process.env.PREMIUM_SECRET_CODE
-  )
-    res.render("membership", {
-      title: "Membership",
-      user: req.user,
-      error: "Invalid Secret Code",
-    });
-  else
-    User.findById(req.user._id, (err, user) => {
-      if (err) return next(err);
-      user.membership = req.body.membership;
-      user.save(err => {
-        if (err) return next(err);
-        res.redirect("/");
+router.post("/membership", [
+  body("secretCode", "secretCode is invalid")
+    .trim()
+    .escape()
+    .equals(process.env.ADMIN_SECRET_CODE),
+  body("membership", "Membership must be admin or premium")
+    .trim()
+    .escape()
+    .isIn(["admin", "premium"]),
+  (req, res, next) => {
+    if (!req.isAuthenticated()) res.redirect("/login");
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      res.render("membership", {
+        title: "Membership",
+        user: req.user,
+        errors: errors.array(),
       });
-    });
-});
+    else
+      User.findById(req.user._id, (err, user) => {
+        if (err) return next(err);
+        user.membership = req.body.membership;
+        user.save(err => {
+          if (err) return next(err);
+          res.redirect("/");
+        });
+      });
+  },
+]);
 
 module.exports = router;
