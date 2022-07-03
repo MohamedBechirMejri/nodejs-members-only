@@ -18,7 +18,7 @@ const compression = require("compression");
 const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+// const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 
 const passport = require("./auth/passport");
@@ -54,7 +54,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 
 // catch 404 and forward to error handler
