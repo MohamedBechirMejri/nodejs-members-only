@@ -1,7 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
+
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const { body, validationResult } = require("express-validator");
+
 const User = require("../models/User");
 const passport = require("../auth/passport");
 
@@ -36,13 +39,27 @@ router.get("/login", (req, res) => {
   else res.render("login");
 });
 
-router.post(
-  "/login",
+router.post("/login", [
+  body("email", "Email is required").trim().escape().isEmail(),
+  body("password", "Password must be longer than 8 Characters")
+    .trim()
+    .escape()
+    .isLength({ min: 8 }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("login", {
+        errors: errors.array(),
+        data: req.body,
+      });
+    }
+    next();
+  },
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
-  })
-);
+  }),
+]);
 
 router.get("/logout", (req, res, next) => {
   req.logout(err => {
