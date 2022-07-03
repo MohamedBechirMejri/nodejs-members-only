@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
   Post.find({}, (err, posts) => {
     if (err) return next(err);
-    res.render("posts/index", { posts });
+    res.render("posts/index", { posts, user: req.user });
   }).populate("user");
 });
 
