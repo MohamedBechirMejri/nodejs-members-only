@@ -36,7 +36,7 @@ router.post("/new", [
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
-      user: req.user._id,
+      user: req.user.id,
     });
     post.save(err => {
       if (err) return next(err);
