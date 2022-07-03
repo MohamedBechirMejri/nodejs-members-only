@@ -1,0 +1,13 @@
+extends layout
+
+block content
+
+    div
+        h1 Join the VIPs
+        form(action="/membership" method="POST")
+            input(type='radio' id='premium' name='membership' value='premium' checked)
+            label(for="premium") Premium Member ($100)
+            input(type='radio' id='admin' name='membership' value='admin')
+            label(for="admin") Admin (requires code)
+            input(type='password' name='secretCode')
+            input(type="submit" value="Join")
