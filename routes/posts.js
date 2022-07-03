@@ -8,7 +8,10 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get("/", (req, res, next) => {
-  res.render("posts/index", { title: "Home" });
+  Post.find({}, (err, posts) => {
+    if (err) return next(err);
+    res.render("posts/index", { posts });
+  }).populate("user");
 });
 
 router.get("/new", (req, res, next) => {
