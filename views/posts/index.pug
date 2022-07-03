@@ -10,9 +10,9 @@ block content
                 each post in posts
                     div
                         h2= post.title
-                        p= post.body
-                        if user.membership !== 'free'
+                        p= post.content
+                        if user && user.membership !== 'free'
                             p= post.user.name
-                        p= post.created_at
-                        if user.membership === 'admin'
+                        p= post.date
+                        if user && user.membership === 'admin'
                             a(href='/posts/' + post.id + '/delete') Delete
