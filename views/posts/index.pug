@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+
+    div
+        h1 Posts
+        a(href='/posts/new') New Post
+        if posts && posts.length > 0
+            ul
+                each post in posts
+                    div
+                        h2= post.title
+                        p= post.body
+                        if user.membership !== 'free'
+                            p= post.user.name
+                        p= post.created_at
+                        if user.membership === 'admin'
+                            a(href='/posts/' + post.id + '/delete') Delete
