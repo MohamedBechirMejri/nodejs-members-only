@@ -84,6 +84,7 @@ router.post("/membership", [
   body("secretCode", "secretCode is invalid")
     .trim()
     .escape()
+    .if((membership, { req }) => req.body.membership === "admin")
     .equals(process.env.ADMIN_SECRET_CODE),
   body("membership", "Membership must be admin or premium")
     .trim()
