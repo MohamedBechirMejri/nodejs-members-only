@@ -46,12 +46,19 @@ router.get("/:id/delete", (req, res, next) => {
   if (req.isAuthenticated())
     if (req.user.membership === "admin")
       res.render("posts/delete", { title: "Delete Post" });
-    else res.redirect("/");
+    else res.redirect("/membership");
   else res.redirect("/signup");
 });
 
 router.post("/:id/delete", (req, res, next) => {
-  res.redirect("/");
+  if (req.isAuthenticated())
+    if (req.user.membership === "admin") {
+      Post.findByIdAndDelete(req.params.id, err => {
+        if (err) return next(err);
+        res.redirect("/posts");
+      });
+    } else res.redirect("/membership");
+  else res.redirect("/signup");
 });
 
 module.exports = router;
