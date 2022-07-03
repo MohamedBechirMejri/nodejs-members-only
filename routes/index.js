@@ -11,7 +11,8 @@ const passport = require("../auth/passport");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
+  if (req.isAuthenticated()) res.redirect("/posts");
+  else res.render("index", { title: "Home" });
 });
 
 router.get("/signup", (req, res) => {
