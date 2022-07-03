@@ -83,8 +83,8 @@ router.get("/membership", (req, res, next) => {
 router.post("/membership", (req, res, next) => {
   if (!req.isAuthenticated()) res.redirect("/login");
   if (
-    req.body.secretCode !== process.env.ADMIN_SECRET_CODE ||
-    req.body.secretCode !== process.env.PREMIUM_SECRET_CODE
+    req.body.secretCode !== process.env.ADMIN_SECRET_CODE
+    // ||req.body.secretCode !== process.env.PREMIUM_SECRET_CODE
   )
     res.render("membership", {
       title: "Membership",
