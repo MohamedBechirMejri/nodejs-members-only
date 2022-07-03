@@ -43,7 +43,11 @@ router.post("/new", [
 ]);
 
 router.get("/:id/delete", (req, res, next) => {
-  res.redirect("/");
+  if (req.isAuthenticated())
+    if (req.user.membership === "admin")
+      res.render("posts/delete", { title: "Delete Post" });
+    else res.redirect("/");
+  else res.redirect("/signup");
 });
 
 router.post("/:id/delete", (req, res, next) => {
