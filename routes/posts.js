@@ -15,4 +15,16 @@ router.get("/new", (req, res, next) => {
   }
 });
 
+router.post("/new", (req, res, next) => {
+  res.redirect("/");
+});
+
+router.get("/:id/delete", (req, res, next) => {
+  res.redirect("/");
+});
+
+router.post("/:id/delete", (req, res, next) => {
+  res.redirect("/");
+});
+
 module.exports = router;
