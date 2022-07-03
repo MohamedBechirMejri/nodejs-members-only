@@ -25,6 +25,10 @@ const postSchema = new Schema(
   }
 );
 
+postSchema.virtual("date").get(function () {
+  return new Date(this.createdAt).toLocaleString();
+});
+
 postSchema.virtual("url", function () {
   return `/posts/${this._id}`;
 });
