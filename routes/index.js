@@ -22,25 +22,57 @@ router.get("/signup", (req, res) => {
   else res.render("signup");
 });
 
-router.post("/signup", (req, res, next) => {
-  if (req.isAuthenticated()) res.redirect("/");
-  else
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) return next(err);
-      const user = new User({
-        username: req.body.username,
-        password: hashedPassword,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        membership: "free",
-      });
-      user.save(err => {
-        if (err) return next(err);
-        res.redirect("/");
-      });
-    });
-});
+router.post("/signup", [
+  body("firstName").not().isEmpty().withMessage("First name is required"),
+  body("lastName").not().isEmpty().withMessage("Last name is required"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+  body("email").isEmail(),
+  body("email").custom(value =>
+    User.findOne({ email: value }).then(user => {
+      if (user) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject("Email already exists");
+      }
+    })
+  ),
+  body("passwordConfirmation").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Password confirmation does not match password");
+    }
+
+    // Indicates the success of this synchronous custom validator
+    return true;
+  }),
+
+  (req, res, next) => {
+    if (req.isAuthenticated()) res.redirect("/");
+    else {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+        res.render("signup", {
+          errors: errors.array(),
+        });
+      else
+        bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+          if (err) return next(err);
+          const user = new User({
+            username: req.body.username,
+            password: hashedPassword,
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            membership: "free",
+          });
+          user.save(err => {
+            if (err) return next(err);
+            res.redirect("/");
+          });
+        });
+    }
+  },
+]);
 
 router.get("/login", (req, res) => {
   if (req.isAuthenticated()) res.redirect("/");
@@ -113,3 +145,6 @@ router.post("/membership", [
 ]);
 
 module.exports = router;
+
+// TODO: fix password confirmation
+// TODO: fix login error on wrong password
