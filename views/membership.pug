@@ -2,12 +2,14 @@ extends layout
 
 block content
 
-    div
-        h1 Join the VIPs
-        form(action="/membership" method="POST")
-            input(type='radio' id='premium' name='membership' value='premium' checked)
-            label(for="premium") Premium Member ($100)
-            input(type='radio' id='admin' name='membership' value='admin')
-            label(for="admin") Admin (requires code)
-            input(type='password' name='secretCode')
-            input(type="submit" value="Join")
+    .w-full.h-full.flex.flex-col.justify-center.items-center.p-4.gap-2
+        h1.text-4xl.font-bold Join the VIPs
+        form.flex.flex-col.justify-center.items-center.p-4.gap-4(action="/membership" method="POST")
+            .w-52.flex.justify-start.items-center.gap-2
+                input(type='radio' id='premium' name='membership' value='premium' checked class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white hover:bg-gray-300")
+                label(for="premium" ) Premium Member ($100)
+            .w-52.flex.justify-start.items-center.gap-2
+                input(type='radio' id='admin' name='membership' value='admin' class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white hover:bg-gray-300")
+                label(for="admin" ) Admin (requires code)
+            input(type='password' name='secretCode' class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300" placeholder='Secret Code')
+            input(type="submit" value="Join" class='px-4 p-1 rounded-lg bg-yellow-200 hover:bg-yellow-500 transition-all font-bold text-yellow-500 hover:text-white cursor-pointer text-xl')
