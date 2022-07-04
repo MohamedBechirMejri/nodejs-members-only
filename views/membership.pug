@@ -5,6 +5,9 @@ block content
     .w-full.h-full.flex.flex-col.justify-center.items-center.p-4.gap-2
         h1.text-4xl.font-bold Join the VIPs
         form.flex.flex-col.justify-center.items-center.p-4.gap-4(action="/membership" method="POST")
+        if errors && errors.length > 0
+            each error in errors
+                p.text-red-500.font-bold= error.msg
             .w-52.flex.justify-start.items-center.gap-2
                 input(type='radio' id='premium' name='membership' value='premium' checked class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white hover:bg-gray-300")
                 label(for="premium" ) Premium Member ($100)
