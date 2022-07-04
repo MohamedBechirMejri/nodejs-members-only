@@ -10,7 +10,7 @@ block content
                 each post in posts
                     .flex.flex-col.justify-center.items-center.p-8.gap-4
                         h2.text-4xl.font-bold= post.title
-                        p.p-8.bg-slate-200.rounded-lg.font-medium= post.content
+                        p.p-8.bg-slate-200.rounded-lg.font-medium.whitespace-pre-wrap= post.content
                         .flex.items-center.justify-center.gap-4
                             if user && user.membership !== 'free'
                                 p.text-green-500.font-bold= post.user.firstName + ' ' + post.user.lastName
