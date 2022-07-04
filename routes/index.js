@@ -97,27 +97,25 @@ router.get("/login", (req, res) => {
   else res.render("login");
 });
 
-router.post("/login", [
-  body("email", "Email is required").trim().escape().isEmail(),
-  body("password", "Password must be longer than 8 Characters")
-    .trim()
-    .escape()
-    .isLength({ min: 8 }),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
       return res.render("login", {
-        errors: errors.array(),
+        info,
         data: req.body,
       });
     }
-    next();
-  },
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  }),
-]);
+    req.login(user, err => {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/");
+    });
+  })(req, res, next);
+});
 
 router.get("/logout", (req, res, next) => {
   req.logout(err => {
@@ -163,6 +161,3 @@ router.post("/membership", [
 ]);
 
 module.exports = router;
-
-// TODO: fix password confirmation
-// TODO: fix login error on wrong password
