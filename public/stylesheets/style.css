@@ -731,6 +731,9 @@ select {
 .gap-8 {
   gap: 2rem;
 }
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
 .rounded-md {
   border-radius: 0.375rem;
 }
