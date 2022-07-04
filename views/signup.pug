@@ -9,7 +9,7 @@ block content
         input(type="text" name="firstName" placeholder="First Name" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
         input(type="text" name="lastName" placeholder="Last Name" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
         input(type="email" name="email" placeholder="Email" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
-        input(type="password" name="password" placeholder="Password" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
-        input(type="password" name="passwordConfirmation" placeholder="Confirm Password" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
+        input(type="password" name="password" placeholder="Password" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300" minLength='8')
+        input(type="password" name="passwordConfirmation" placeholder="Confirm Password" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300" minLength='8')
         input(type="submit" value="Sign Up" class='px-8 p-2 rounded-lg bg-slate-200 hover:bg-slate-500 transition-all font-bold hover:text-white text-slate-500 cursor-pointer')
         a(href="/login" class='hover:underline') Already have an account?
