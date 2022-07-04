@@ -24,7 +24,7 @@ router.get("/new", (req, res, next) => {
 
 router.post("/new", [
   body("title", "Title is required").trim().escape().not().isEmpty(),
-  body("content", "Body is required").trim().escape().not().isEmpty(),
+  body("content", "Body is required").trim().not().isEmpty(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
