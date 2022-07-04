@@ -45,7 +45,7 @@ code {
   left: 0;
   right: 0;
   height: 2px;
-  background-color: white;
+  background-color: black;
   transform-origin: bottom right;
   transform: scaleX(0);
   transition: transform 0.5s ease;
