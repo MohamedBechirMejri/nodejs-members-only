@@ -7,6 +7,8 @@ block content
         if errors && errors.length > 0
             each error in errors
                 p.text-red-500.font-bold= error.msg
+        if info
+            p.text-red-500.font-bold= info.message
         input(type="email" name="email" placeholder="Email" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
         input(type="password" name="password" placeholder="Password" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
         input(type="submit" value="Login" class='px-8 p-2 rounded-lg bg-slate-200 hover:bg-slate-500 transition-all font-bold hover:text-white text-slate-500 cursor-pointer')
