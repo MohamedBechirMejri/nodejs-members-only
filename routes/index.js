@@ -126,7 +126,9 @@ router.get("/logout", (req, res, next) => {
 
 router.get("/membership", (req, res, next) => {
   if (!req.isAuthenticated()) res.redirect("/login");
-  else res.render("membership", { title: "Membership", user: req.user });
+  else if (req.user.membership === "admin") {
+    res.redirect("/");
+  } else res.render("membership", { title: "Membership", user: req.user });
 });
 
 router.post("/membership", [
