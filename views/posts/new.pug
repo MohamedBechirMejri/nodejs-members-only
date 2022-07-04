@@ -4,6 +4,9 @@ block content
 
     form.flex.flex-col.justify-center.items-center.gap-4.text-slate-500(action="" method="POST")
         h1.text-4xl.font-bold Add Message
+        if errors && errors.length > 0
+            each error in errors
+                p.text-red-500.font-bold= error.msg
         input(type="text" name="title" placeholder="Title" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300")
         textarea(name="content" cols="30" rows="10" required class="block mt-1 transition-all bg-gray-200 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0 w-[25em] hover:bg-gray-300" placeholder='Content')
         input(type="submit" value="Create" class='px-8 p-2 rounded-lg bg-slate-200 hover:bg-slate-500 transition-all font-bold hover:text-white text-slate-500 cursor-pointer')
